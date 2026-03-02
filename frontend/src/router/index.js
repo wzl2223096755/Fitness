@@ -75,11 +75,24 @@ function isAdminRole() {
   return role === 'ADMIN' || role === 'ROLE_ADMIN'
 }
 
+// GitHub Pages / 演示环境检测
+const isDemoEnv = typeof window !== 'undefined' && window.location.hostname.endsWith('github.io')
+
 // 路由守卫
 router.beforeEach((to, from, next) => {
   // 设置页面标题
   document.title = to.meta.title ? `${to.meta.title} - AFitness` : 'AFitness'
-  
+
+  // 在 GitHub Pages 等演示环境下，直接放行并默认进入用户管理页面
+  if (isDemoEnv) {
+    if (to.path === '/' || to.path === '/login') {
+      next('/admin/users')
+      return
+    }
+    next()
+    return
+  }
+
   const token = localStorage.getItem('token')
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
   const requiresAuth = to.meta.requiresAuth !== false
