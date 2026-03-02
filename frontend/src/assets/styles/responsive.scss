@@ -1,0 +1,1258 @@
+@use './variables.scss' as *;
+@use './tokens' as tokens;
+@use './typography' as typography;
+@use './spacing' as spacing;
+@use './grid' as grid;
+@use 'sass:math';
+
+// =============================================================================
+// 响应式断点变量
+// =============================================================================
+// 使用新设计令牌系统的断点，同时保持向后兼容性
+// Requirements: 2.1, 2.2, 3.1, 3.4, 4.5
+
+// 新断点系统（来自 _tokens.scss）- 6 个完整断点
+// Requirements: 3.1
+$breakpoint-xs: tokens.$breakpoint-xs;   // 320px
+$breakpoint-sm: tokens.$breakpoint-sm;   // 480px
+$breakpoint-md: tokens.$breakpoint-md;   // 768px
+$breakpoint-lg: tokens.$breakpoint-lg;   // 1024px
+$breakpoint-xl: tokens.$breakpoint-xl;   // 1280px
+$breakpoint-2xl: tokens.$breakpoint-2xl; // 1536px
+
+// 向后兼容的断点别名
+$breakpoint-tablet: $breakpoint-md;      // 768px
+$breakpoint-desktop: $breakpoint-lg;     // 1024px
+
+// =============================================================================
+// 增强响应式 Mixins
+// =============================================================================
+// Requirements: 3.4, 4.5
+
+// Helper function to strip unit from a value
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+// -----------------------------------------------------------------------------
+// xs-only: 仅在 xs 断点 (max-width: 479px)
+// -----------------------------------------------------------------------------
+@mixin xs-only {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// sm-only: 仅在 sm 断点 (480px - 767px)
+// -----------------------------------------------------------------------------
+@mixin sm-only {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// md-only: 仅在 md 断点 (768px - 1023px)
+// -----------------------------------------------------------------------------
+@mixin md-only {
+  @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// lg-only: 仅在 lg 断点 (1024px - 1279px)
+// -----------------------------------------------------------------------------
+@mixin lg-only {
+  @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// xl-only: 仅在 xl 断点 (1280px - 1535px)
+// -----------------------------------------------------------------------------
+@mixin xl-only {
+  @media (min-width: #{$breakpoint-xl}) and (max-width: #{$breakpoint-2xl - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// sm-up: sm 断点及以上 (min-width: 480px)
+// -----------------------------------------------------------------------------
+@mixin sm-up {
+  @media (min-width: #{$breakpoint-sm}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// md-up: md 断点及以上 (min-width: 768px)
+// -----------------------------------------------------------------------------
+@mixin md-up {
+  @media (min-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// lg-up: lg 断点及以上 (min-width: 1024px)
+// -----------------------------------------------------------------------------
+@mixin lg-up {
+  @media (min-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// xl-up: xl 断点及以上 (min-width: 1280px)
+// -----------------------------------------------------------------------------
+@mixin xl-up {
+  @media (min-width: #{$breakpoint-xl}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// xxl-up: 2xl 断点及以上 (min-width: 1536px)
+// -----------------------------------------------------------------------------
+@mixin xxl-up {
+  @media (min-width: #{$breakpoint-2xl}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// touch-target: 触摸目标优化 mixin
+// Requirements: 4.1, 4.2
+// 确保交互元素最小尺寸为 44x44px
+// 参数:
+//   $size: 最小尺寸 (默认 44px)
+// -----------------------------------------------------------------------------
+@mixin touch-target($size: 44px) {
+  min-width: $size;
+  min-height: $size;
+  
+  // 在触摸设备上强制应用
+  @include touch-device {
+    min-width: $size;
+    min-height: $size;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// touch-target-inline: 内联触摸目标优化
+// 用于内联元素，使用 padding 扩展点击区域
+// -----------------------------------------------------------------------------
+@mixin touch-target-inline($size: 44px) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: $size;
+    min-height: $size;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// sm-down: sm 断点及以下 (max-width: 479px)
+// -----------------------------------------------------------------------------
+@mixin sm-down {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// md-down: md 断点及以下 (max-width: 767px)
+// -----------------------------------------------------------------------------
+@mixin md-down {
+  @media (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// lg-down: lg 断点及以下 (max-width: 1023px)
+// -----------------------------------------------------------------------------
+@mixin lg-down {
+  @media (max-width: #{$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// xl-down: xl 断点及以下 (max-width: 1279px)
+// -----------------------------------------------------------------------------
+@mixin xl-down {
+  @media (max-width: #{$breakpoint-xl - 1px}) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// touch-device: 触摸设备检测
+// Requirements: 4.5
+// -----------------------------------------------------------------------------
+@mixin touch-device {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// hover-device: 支持悬停的设备（非触摸设备）
+// -----------------------------------------------------------------------------
+@mixin hover-device {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// fluid-type: 流体排版 mixin
+// Requirements: 3.4
+// 使用 clamp() 实现在断点之间平滑缩放的字号
+// 参数:
+//   $min-size: 最小字号 (px 或 rem)
+//   $max-size: 最大字号 (px 或 rem)
+//   $min-vw: 最小视口宽度 (默认 sm 断点)
+//   $max-vw: 最大视口宽度 (默认 xl 断点)
+// -----------------------------------------------------------------------------
+@mixin fluid-type($min-size, $max-size, $min-vw: $breakpoint-sm, $max-vw: $breakpoint-xl) {
+  // 将 px 值转换为数字用于计算
+  $min-size-val: strip-unit($min-size);
+  $max-size-val: strip-unit($max-size);
+  $min-vw-val: strip-unit($min-vw);
+  $max-vw-val: strip-unit($max-vw);
+  
+  // 计算斜率和截距
+  $slope: math.div(($max-size-val - $min-size-val), ($max-vw-val - $min-vw-val));
+  $intercept: $min-size-val - ($slope * $min-vw-val);
+  
+  // 使用 clamp() 实现流体排版
+  font-size: clamp(
+    #{$min-size},
+    calc(#{$intercept}px + #{$slope * 100}vw),
+    #{$max-size}
+  );
+}
+
+// -----------------------------------------------------------------------------
+// fluid-spacing: 流体间距 mixin
+// 使用 clamp() 实现在断点之间平滑缩放的间距
+// -----------------------------------------------------------------------------
+@mixin fluid-spacing($property, $min-size, $max-size, $min-vw: $breakpoint-sm, $max-vw: $breakpoint-xl) {
+  $min-size-val: strip-unit($min-size);
+  $max-size-val: strip-unit($max-size);
+  $min-vw-val: strip-unit($min-vw);
+  $max-vw-val: strip-unit($max-vw);
+  
+  $slope: math.div(($max-size-val - $min-size-val), ($max-vw-val - $min-vw-val));
+  $intercept: $min-size-val - ($slope * $min-vw-val);
+  
+  #{$property}: clamp(
+    #{$min-size},
+    calc(#{$intercept}px + #{$slope * 100}vw),
+    #{$max-size}
+  );
+}
+
+// =============================================================================
+// 传统媒体查询混合器（保持向后兼容）
+// =============================================================================
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs}) {
+      @content;
+    }
+  }
+  @if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm}) {
+      @content;
+    }
+  }
+  @if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md}) {
+      @content;
+    }
+  }
+  @if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg}) {
+      @content;
+    }
+  }
+  @if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl}) {
+      @content;
+    }
+  }
+  @if $breakpoint == 2xl {
+    @media (max-width: #{$breakpoint-2xl}) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-above($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: #{$breakpoint-xs + 1}) {
+      @content;
+    }
+  }
+  @if $breakpoint == sm {
+    @media (min-width: #{$breakpoint-sm + 1}) {
+      @content;
+    }
+  }
+  @if $breakpoint == md {
+    @media (min-width: #{$breakpoint-md + 1}) {
+      @content;
+    }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: #{$breakpoint-lg + 1}) {
+      @content;
+    }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: #{$breakpoint-xl + 1}) {
+      @content;
+    }
+  }
+  @if $breakpoint == 2xl {
+    @media (min-width: #{$breakpoint-2xl + 1}) {
+      @content;
+    }
+  }
+}
+
+// =============================================================================
+// 移动端优先的网格系统
+// =============================================================================
+// 使用新设计令牌系统的间距变量
+// Requirements: 3.1, 3.3
+
+$grid-columns: 12;
+$grid-gutter-width: spacing.$gutter-lg; // 24px - 使用新间距系统
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: calc(#{$gutter} / 2 * -1);
+  margin-left: calc(#{$gutter} / 2 * -1);
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+  flex: 0 0 calc(#{$size} / #{$columns} * 100%);
+  max-width: calc(#{$size} / #{$columns} * 100%);
+  padding-right: calc(#{$grid-gutter-width} / 2);
+  padding-left: calc(#{$grid-gutter-width} / 2);
+}
+
+// 响应式网格类
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    @include make-col($i);
+  }
+}
+
+// 移动端网格类
+@include respond-to(sm) {
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      @include make-col($i);
+    }
+  }
+}
+
+// 平板网格类
+@include respond-to(md) {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      @include make-col($i);
+    }
+  }
+}
+
+// 桌面网格类
+@include respond-to(lg) {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      @include make-col($i);
+    }
+  }
+}
+
+// 大屏网格类
+@include respond-to(xl) {
+  @for $i from 1 through $grid-columns {
+    .col-xl-#{$i} {
+      @include make-col($i);
+    }
+  }
+}
+
+// =============================================================================
+// 容器类
+// =============================================================================
+// 使用新设计令牌系统的间距变量
+// Requirements: 3.5
+
+.container {
+  width: 100%;
+  padding-right: tokens.$spacing-4;  // 16px
+  padding-left: tokens.$spacing-4;   // 16px
+  margin-right: auto;
+  margin-left: auto;
+  
+  @include respond-above(sm) {
+    max-width: 540px;
+    padding-right: tokens.$spacing-5;  // 20px
+    padding-left: tokens.$spacing-5;   // 20px
+  }
+  
+  @include respond-above(md) {
+    max-width: 720px;
+    padding-right: tokens.$spacing-6;  // 24px
+    padding-left: tokens.$spacing-6;   // 24px
+  }
+  
+  @include respond-above(lg) {
+    max-width: 960px;
+  }
+  
+  @include respond-above(xl) {
+    max-width: 1140px;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: tokens.$spacing-4;  // 16px
+  padding-left: tokens.$spacing-4;   // 16px
+  margin-right: auto;
+  margin-left: auto;
+  
+  @include respond-above(md) {
+    padding-right: tokens.$spacing-6;  // 24px
+    padding-left: tokens.$spacing-6;   // 24px
+  }
+}
+
+// 响应式显示类
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-flex { display: flex !important; }
+.d-inline-flex { display: inline-flex !important; }
+
+@include respond-to(sm) {
+  .d-sm-none { display: none !important; }
+  .d-sm-block { display: block !important; }
+  .d-sm-inline { display: inline !important; }
+  .d-sm-inline-block { display: inline-block !important; }
+  .d-sm-flex { display: flex !important; }
+  .d-sm-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(md) {
+  .d-md-none { display: none !important; }
+  .d-md-block { display: block !important; }
+  .d-md-inline { display: inline !important; }
+  .d-md-inline-block { display: inline-block !important; }
+  .d-md-flex { display: flex !important; }
+  .d-md-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(lg) {
+  .d-lg-none { display: none !important; }
+  .d-lg-block { display: block !important; }
+  .d-lg-inline { display: inline !important; }
+  .d-lg-inline-block { display: inline-block !important; }
+  .d-lg-flex { display: flex !important; }
+  .d-lg-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(xl) {
+  .d-xl-none { display: none !important; }
+  .d-xl-block { display: block !important; }
+  .d-xl-inline { display: inline !important; }
+  .d-xl-inline-block { display: inline-block !important; }
+  .d-xl-flex { display: flex !important; }
+  .d-xl-inline-flex { display: inline-flex !important; }
+}
+
+// 响应式文本对齐
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+
+@include respond-to(sm) {
+  .text-sm-left { text-align: left !important; }
+  .text-sm-right { text-align: right !important; }
+  .text-sm-center { text-align: center !important; }
+}
+
+@include respond-to(md) {
+  .text-md-left { text-align: left !important; }
+  .text-md-right { text-align: right !important; }
+  .text-md-center { text-align: center !important; }
+}
+
+@include respond-to(lg) {
+  .text-lg-left { text-align: left !important; }
+  .text-lg-right { text-align: right !important; }
+  .text-lg-center { text-align: center !important; }
+}
+
+@include respond-to(xl) {
+  .text-xl-left { text-align: left !important; }
+  .text-xl-right { text-align: right !important; }
+  .text-xl-center { text-align: center !important; }
+}
+
+// =============================================================================
+// 响应式排版系统
+// =============================================================================
+// 移动端字号缩放规则
+// Requirements: 2.1 - 在 768px 断点减少基础字号 10-15%
+// Requirements: 2.2 - 在 480px 断点按比例减少标题字号
+
+// 响应式基础字号设置
+html {
+  font-size: 16px;  // 桌面端基础字号
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 15px;  // 平板端：减少约 6%
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 14px;  // 移动端：减少约 12.5%（符合 10-15% 要求）
+  }
+}
+
+// 响应式标题样式
+// Requirements: 2.2 - 在 480px 断点按比例减少标题字号
+h1, .h1, .heading-1 {
+  font-size: tokens.$font-size-4xl;  // 36px
+  font-weight: tokens.$font-weight-extrabold;
+  line-height: tokens.$line-height-tight;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 32px;  // 平板端
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 26px;  // 移动端
+  }
+}
+
+h2, .h2, .heading-2 {
+  font-size: tokens.$font-size-3xl;  // 30px
+  font-weight: tokens.$font-weight-bold;
+  line-height: tokens.$line-height-tight;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 27px;  // 平板端
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 22px;  // 移动端
+  }
+}
+
+h3, .h3, .heading-3 {
+  font-size: tokens.$font-size-2xl;  // 24px
+  font-weight: tokens.$font-weight-semibold;
+  line-height: tokens.$line-height-snug;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 22px;  // 平板端
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 18px;  // 移动端
+  }
+}
+
+h4, .h4, .heading-4 {
+  font-size: tokens.$font-size-xl;  // 20px
+  font-weight: tokens.$font-weight-semibold;
+  line-height: tokens.$line-height-snug;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 18px;  // 平板端
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 16px;  // 移动端（最小 16px）
+  }
+}
+
+// 响应式正文样式
+// Requirements: 2.4 - 最小字号不低于 14px
+body, .body-text {
+  font-size: tokens.$font-size-base;  // 16px
+  line-height: tokens.$line-height-relaxed;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: 15px;  // 平板端
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: 14px;  // 移动端（最小 14px）
+  }
+}
+
+// 响应式数据值样式
+.data-value {
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: tokens.$font-size-2xl;  // 24px
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: tokens.$font-size-xl;  // 20px
+  }
+}
+
+.data-value--lg {
+  @media (max-width: #{$breakpoint-md}) {
+    font-size: tokens.$font-size-3xl;  // 30px
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    font-size: tokens.$font-size-2xl;  // 24px
+  }
+}
+
+// =============================================================================
+// 响应式网格布局
+// =============================================================================
+// 移动端网格布局调整
+// Requirements: 3.2, 3.3
+
+// 移动端自适应网格
+.auto-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: spacing.$gutter-lg;  // 24px
+  
+  @media (max-width: #{$breakpoint-md}) {
+    gap: spacing.$gutter-md;  // 20px
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;  // 单列布局
+    gap: spacing.$gutter-sm;  // 16px
+  }
+}
+
+// 移动端两列网格
+.grid-2-cols-responsive {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: spacing.$gutter-lg;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    gap: spacing.$gutter-md;
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;
+    gap: spacing.$gutter-sm;
+  }
+}
+
+// 移动端三列网格
+.grid-3-cols-responsive {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: spacing.$gutter-lg;
+  
+  @media (max-width: #{$breakpoint-lg}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing.$gutter-md;
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;
+    gap: spacing.$gutter-sm;
+  }
+}
+
+// 移动端四列网格
+.grid-4-cols-responsive {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: spacing.$gutter-lg;
+  
+  @media (max-width: #{$breakpoint-lg}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing.$gutter-md;
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;
+    gap: spacing.$gutter-sm;
+  }
+}
+
+// 仪表盘卡片网格（响应式）
+.dashboard-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: spacing.$gutter-lg;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: spacing.$gutter-md;
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;
+    gap: spacing.$gutter-sm;
+  }
+}
+
+// 统计卡片网格（响应式）
+.stats-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: tokens.$spacing-4;
+  
+  @media (max-width: #{$breakpoint-md}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: tokens.$spacing-3;
+  }
+  
+  @media (max-width: #{$breakpoint-xs}) {
+    grid-template-columns: 1fr;
+    gap: tokens.$spacing-2;
+  }
+}
+
+// =============================================================================
+// 触摸目标优化
+// =============================================================================
+// Requirements: 4.1, 4.2
+// 确保所有交互元素在触摸设备上有最小 44x44px 的触摸目标
+
+// 触摸目标工具类
+.touch-target {
+  @include touch-target(44px);
+}
+
+.touch-target-sm {
+  @include touch-target(36px);
+}
+
+.touch-target-lg {
+  @include touch-target(48px);
+}
+
+// 触摸设备上的交互元素优化
+@include touch-device {
+  // 按钮元素
+  .btn, 
+  button, 
+  .el-button,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  // 链接和可点击元素
+  a,
+  .clickable,
+  [role="link"] {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  // 表单控件
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  // Element Plus 组件
+  .el-checkbox,
+  .el-radio,
+  .el-switch {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .el-input__inner,
+  .el-textarea__inner,
+  .el-select .el-input__inner {
+    min-height: 44px;
+  }
+  
+  // 图标按钮
+  .icon-btn,
+  .el-button--text,
+  .el-button.is-circle {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+  
+  // 下拉菜单项
+  .el-dropdown-menu__item,
+  .el-select-dropdown__item {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  // 标签页
+  .el-tabs__item {
+    min-height: 44px;
+    padding: 0 16px;
+  }
+  
+  // 分页
+  .el-pagination .btn-prev,
+  .el-pagination .btn-next,
+  .el-pagination .el-pager li {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  // 表格操作按钮
+  .el-table .cell .el-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  // 导航菜单项
+  .el-menu-item,
+  .el-submenu__title {
+    min-height: 44px;
+  }
+  
+  // 卡片可点击区域
+  .card-clickable,
+  .card--interactive {
+    min-height: 44px;
+  }
+}
+
+// 非触摸设备上禁用 hover-only 交互
+// Requirements: 4.5
+@include touch-device {
+  .hover-only {
+    display: none !important;
+  }
+  
+  // 显示触摸设备专用元素
+  .touch-only {
+    display: block !important;
+  }
+}
+
+// 非触摸设备上隐藏触摸专用元素
+@include hover-device {
+  .touch-only {
+    display: none !important;
+  }
+}
+
+// 高对比度模式支持
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid $border-color;
+  }
+  
+  .btn-primary {
+    border-width: 2px;
+  }
+}
+
+// 减少动画偏好支持
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// =====================================================
+// 移动端表单布局工具类
+// =====================================================
+// 使用新设计令牌系统的间距变量
+
+// 强制垂直布局
+.form-vertical {
+  .el-form-item__label {
+    text-align: left !important;
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    padding-bottom: tokens.$spacing-2;  // 8px
+  }
+  
+  .el-form-item__content {
+    margin-left: 0 !important;
+  }
+}
+
+// 移动端自动垂直布局
+@include respond-to(md) {
+  .form-responsive {
+    .el-form-item__label {
+      text-align: left !important;
+      float: none !important;
+      display: block !important;
+      width: 100% !important;
+      padding-bottom: tokens.$spacing-2;  // 8px
+    }
+    
+    .el-form-item__content {
+      margin-left: 0 !important;
+    }
+  }
+  
+  // 移动端表单字段间距调整
+  .el-form-item {
+    margin-bottom: spacing.$form-field-gap;  // 16px
+  }
+}
+
+// =====================================================
+// 移动端Flex工具类
+// =====================================================
+// 使用新设计令牌系统的间距变量
+
+.flex-col-mobile {
+  @include respond-to(md) {
+    flex-direction: column !important;
+  }
+}
+
+.flex-row-mobile {
+  @include respond-to(md) {
+    flex-direction: row !important;
+  }
+}
+
+.flex-wrap-mobile {
+  @include respond-to(md) {
+    flex-wrap: wrap !important;
+  }
+}
+
+.gap-mobile-xs {
+  @include respond-to(md) {
+    gap: tokens.$spacing-1 !important;  // 4px
+  }
+}
+
+.gap-mobile-sm {
+  @include respond-to(md) {
+    gap: tokens.$spacing-2 !important;  // 8px
+  }
+}
+
+.gap-mobile-md {
+  @include respond-to(md) {
+    gap: tokens.$spacing-3 !important;  // 12px
+  }
+}
+
+.gap-mobile-lg {
+  @include respond-to(md) {
+    gap: tokens.$spacing-4 !important;  // 16px
+  }
+}
+
+.gap-mobile-xl {
+  @include respond-to(md) {
+    gap: tokens.$spacing-5 !important;  // 20px
+  }
+}
+
+// =====================================================
+// 移动端宽度工具类
+// =====================================================
+
+.w-full-mobile {
+  @include respond-to(sm) {
+    width: 100% !important;
+  }
+}
+
+.max-w-full-mobile {
+  @include respond-to(sm) {
+    max-width: 100% !important;
+  }
+}
+
+// =====================================================
+// 移动端间距工具类
+// =====================================================
+// 使用新设计令牌系统的间距变量
+// Requirements: 4.5
+
+.p-mobile-xs {
+  @include respond-to(md) {
+    padding: tokens.$spacing-1 !important;  // 4px
+  }
+}
+
+.p-mobile-sm {
+  @include respond-to(md) {
+    padding: tokens.$spacing-2 !important;  // 8px
+  }
+}
+
+.p-mobile-md {
+  @include respond-to(md) {
+    padding: tokens.$spacing-3 !important;  // 12px
+  }
+}
+
+.p-mobile-lg {
+  @include respond-to(md) {
+    padding: tokens.$spacing-4 !important;  // 16px
+  }
+}
+
+.px-mobile-sm {
+  @include respond-to(md) {
+    padding-left: tokens.$spacing-2 !important;
+    padding-right: tokens.$spacing-2 !important;
+  }
+}
+
+.px-mobile-md {
+  @include respond-to(md) {
+    padding-left: tokens.$spacing-3 !important;
+    padding-right: tokens.$spacing-3 !important;
+  }
+}
+
+.px-mobile-lg {
+  @include respond-to(md) {
+    padding-left: tokens.$spacing-4 !important;
+    padding-right: tokens.$spacing-4 !important;
+  }
+}
+
+.py-mobile-sm {
+  @include respond-to(md) {
+    padding-top: tokens.$spacing-2 !important;
+    padding-bottom: tokens.$spacing-2 !important;
+  }
+}
+
+.py-mobile-md {
+  @include respond-to(md) {
+    padding-top: tokens.$spacing-3 !important;
+    padding-bottom: tokens.$spacing-3 !important;
+  }
+}
+
+.py-mobile-lg {
+  @include respond-to(md) {
+    padding-top: tokens.$spacing-4 !important;
+    padding-bottom: tokens.$spacing-4 !important;
+  }
+}
+
+.m-mobile-0 {
+  @include respond-to(md) {
+    margin: 0 !important;
+  }
+}
+
+.m-mobile-sm {
+  @include respond-to(md) {
+    margin: tokens.$spacing-2 !important;  // 8px
+  }
+}
+
+.m-mobile-md {
+  @include respond-to(md) {
+    margin: tokens.$spacing-3 !important;  // 12px
+  }
+}
+
+.m-mobile-lg {
+  @include respond-to(md) {
+    margin: tokens.$spacing-4 !important;  // 16px
+  }
+}
+
+.mb-mobile-xs {
+  @include respond-to(md) {
+    margin-bottom: tokens.$spacing-1 !important;  // 4px
+  }
+}
+
+.mb-mobile-sm {
+  @include respond-to(md) {
+    margin-bottom: tokens.$spacing-2 !important;  // 8px
+  }
+}
+
+.mb-mobile-md {
+  @include respond-to(md) {
+    margin-bottom: tokens.$spacing-3 !important;  // 12px
+  }
+}
+
+.mb-mobile-lg {
+  @include respond-to(md) {
+    margin-bottom: tokens.$spacing-4 !important;  // 16px
+  }
+}
+
+.mt-mobile-sm {
+  @include respond-to(md) {
+    margin-top: tokens.$spacing-2 !important;
+  }
+}
+
+.mt-mobile-md {
+  @include respond-to(md) {
+    margin-top: tokens.$spacing-3 !important;
+  }
+}
+
+.mt-mobile-lg {
+  @include respond-to(md) {
+    margin-top: tokens.$spacing-4 !important;
+  }
+}
+
+// 移动端区块间距调整
+.section-mobile-spacing {
+  @include respond-to(md) {
+    margin-bottom: tokens.$spacing-6 !important;  // 24px（从 32px 减少）
+  }
+  
+  @include respond-to(xs) {
+    margin-bottom: tokens.$spacing-4 !important;  // 16px
+  }
+}
+
+// =====================================================
+// 移动端字体工具类
+// =====================================================
+// 使用新设计令牌系统的字号变量
+// Requirements: 2.1, 2.2
+
+// 移动端字号缩放（在 768px 断点减少 10-15%）
+.text-mobile-xs {
+  @include respond-to(md) {
+    font-size: tokens.$font-size-xs !important;  // 12.8px
+  }
+}
+
+.text-mobile-sm {
+  @include respond-to(md) {
+    font-size: tokens.$font-size-sm !important;  // 14px
+  }
+}
+
+.text-mobile-base {
+  @include respond-to(md) {
+    font-size: 14px !important;  // 最小 14px，符合 Requirements 2.4
+  }
+}
+
+.text-mobile-lg {
+  @include respond-to(md) {
+    font-size: 15px !important;
+  }
+}
+
+.text-mobile-xl {
+  @include respond-to(md) {
+    font-size: 16px !important;
+  }
+}
+
+.text-mobile-2xl {
+  @include respond-to(md) {
+    font-size: 18px !important;
+  }
+}
+
+// 移动端标题字号缩放（在 480px 断点按比例减少）
+// Requirements: 2.2
+@include respond-to(xs) {
+  .text-mobile-h1 {
+    font-size: 26px !important;  // 从 36px 缩减
+    font-weight: tokens.$font-weight-extrabold;
+    line-height: tokens.$line-height-tight;
+  }
+  
+  .text-mobile-h2 {
+    font-size: 22px !important;  // 从 30px 缩减
+    font-weight: tokens.$font-weight-bold;
+    line-height: tokens.$line-height-tight;
+  }
+  
+  .text-mobile-h3 {
+    font-size: 18px !important;  // 从 24px 缩减
+    font-weight: tokens.$font-weight-semibold;
+    line-height: tokens.$line-height-snug;
+  }
+  
+  .text-mobile-h4 {
+    font-size: 16px !important;  // 从 20px 缩减
+    font-weight: tokens.$font-weight-semibold;
+    line-height: tokens.$line-height-snug;
+  }
+}
+
+// =====================================================
+// 安全区域适配
+// =====================================================
+
+.safe-area-top {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-left {
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
+}
+
+.safe-area-all {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
+}

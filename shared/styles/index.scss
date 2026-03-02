@@ -1,0 +1,9 @@
+@use 'variables.scss' as *;
+
+// 共享基础样式（可选）
+:root {
+  --fitness-primary: #{$primary-color};
+  --fitness-success: #{$success-color};
+  --fitness-warning: #{$warning-color};
+  --fitness-danger: #{$danger-color};
+}

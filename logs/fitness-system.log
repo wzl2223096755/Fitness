@@ -1,0 +1,331 @@
+2026-03-02 10:44:54.131 WARN  [FitnessHikariCP housekeeper] [,] com.zaxxer.hikari.pool.HikariPool - FitnessHikariCP - Thread starvation or clock leap detected (housekeeper delta=10h27m24s370ms736µs100ns).
+2026-03-02 12:06:33.113 DEBUG [http-nio-8080-exec-7] [379cd97a11b043b7,4df10d56] c.w.f.filter.RequestTracingFilter - Request started: GET / from 0:0:0:0:0:0:0:1
+2026-03-02 12:06:33.260 WARN  [http-nio-8080-exec-7] [379cd97a11b043b7,4df10d56] c.w.f.filter.RequestTracingFilter - Request completed: GET / - Status: 401 - Duration: 149ms
+2026-03-02 12:06:38.153 DEBUG [http-nio-8080-exec-8] [8e523d9d2b174289,201ad89c] c.w.f.filter.RequestTracingFilter - Request started: GET / from 0:0:0:0:0:0:0:1
+2026-03-02 12:06:38.164 WARN  [http-nio-8080-exec-8] [8e523d9d2b174289,201ad89c] c.w.f.filter.RequestTracingFilter - Request completed: GET / - Status: 401 - Duration: 12ms
+2026-03-02 12:06:38.958 DEBUG [http-nio-8080-exec-9] [00e53e4cabfa4b94,7843e4a6] c.w.f.filter.RequestTracingFilter - Request started: GET / from 0:0:0:0:0:0:0:1
+2026-03-02 12:06:38.963 WARN  [http-nio-8080-exec-9] [00e53e4cabfa4b94,7843e4a6] c.w.f.filter.RequestTracingFilter - Request completed: GET / - Status: 401 - Duration: 5ms
+2026-03-02 12:10:04.193 DEBUG [http-nio-8080-exec-1] [18a76fa4790a436b,5f96796e] c.w.f.filter.RequestTracingFilter - Request started: GET / from 0:0:0:0:0:0:0:1
+2026-03-02 12:10:04.202 WARN  [http-nio-8080-exec-1] [18a76fa4790a436b,5f96796e] c.w.f.filter.RequestTracingFilter - Request completed: GET / - Status: 401 - Duration: 9ms
+2026-03-02 14:02:45.299 WARN  [FitnessHikariCP housekeeper] [,] com.zaxxer.hikari.pool.HikariPool - FitnessHikariCP - Thread starvation or clock leap detected (housekeeper delta=11m17s930ms917µs800ns).
+2026-03-02 22:01:21.861 INFO  [main] [,] com.wzl.fitness.FitnessApplication - Starting FitnessApplication using Java 21.0.9 with PID 25024 (D:\AFitness\Fitness\target\classes started by 22230 in d:\AFitness\Fitness)
+2026-03-02 22:01:21.861 DEBUG [main] [,] com.wzl.fitness.FitnessApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-03-02 22:01:21.861 INFO  [main] [,] com.wzl.fitness.FitnessApplication - The following 1 profile is active: "mysql"
+2026-03-02 22:01:24.629 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:01:24.634 INFO  [main] [,] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-02 22:01:24.634 INFO  [main] [,] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-03-02 22:01:24.734 INFO  [main] [,] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-03-02 22:01:26.191 WARN  [main] [,] org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-02 22:01:29.240 DEBUG [main] [,] c.w.f.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-02 22:01:29.240 DEBUG [main] [,] c.w.f.filter.RequestTracingFilter - Filter 'requestTracingFilter' configured for use
+2026-03-02 22:01:29.243 DEBUG [main] [,] com.wzl.fitness.filter.XssFilter - Filter 'xssFilter' configured for use
+2026-03-02 22:01:29.602 INFO  [main] [,] c.w.fitness.service.AsyncTaskService - AsyncTaskService监控指标初始化完成
+2026-03-02 22:01:30.562 INFO  [main] [,] c.w.f.m.a.config.AdminModuleConfig - 管理模块已启用并加载完成
+2026-03-02 22:01:30.707 INFO  [main] [,] c.w.f.m.n.c.NutritionModuleConfig - 营养模块已启用并加载完成
+2026-03-02 22:01:30.823 INFO  [main] [,] c.w.f.m.r.c.RecoveryModuleConfig - 恢复评估模块已启用并加载完成
+2026-03-02 22:01:30.833 INFO  [main] [,] c.w.f.m.t.c.TrainingModuleConfig - 训练模块已启用并加载完成
+2026-03-02 22:01:30.879 INFO  [main] [,] c.w.f.m.user.config.UserModuleConfig - 用户模块已启用并加载完成
+2026-03-02 22:01:30.960 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 初始化模块注册中心...
+2026-03-02 22:01:30.964 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [nutrition] 状态: ENABLED
+2026-03-02 22:01:30.965 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [admin] 状态: ENABLED
+2026-03-02 22:01:30.965 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [training] 状态: ENABLED
+2026-03-02 22:01:30.965 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [recovery] 状态: ENABLED
+2026-03-02 22:01:30.965 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [user] 状态: ENABLED
+2026-03-02 22:01:30.967 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块注册中心初始化完成，共 5 个模块
+2026-03-02 22:01:32.184 INFO  [main] [,] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@487edcba, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@33c9c0f0, org.springframework.security.web.context.SecurityContextHolderFilter@b5911b3, org.springframework.security.web.header.HeaderWriterFilter@71f12d4c, org.springframework.web.filter.CorsFilter@6dd0a83d, org.springframework.security.web.authentication.logout.LogoutFilter@5a0ec14d, com.wzl.fitness.security.JwtAuthenticationFilter@16546957, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@312e3de0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e5b7b61, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@41a3bd2e, org.springframework.security.web.session.SessionManagementFilter@26348a0d, org.springframework.security.web.access.ExceptionTranslationFilter@78ffb0ca, org.springframework.security.web.access.intercept.AuthorizationFilter@6f760360]
+2026-03-02 22:01:32.254 INFO  [main] [,] c.w.fitness.config.TransactionConfig - TransactionTemplate configured with timeout: 30s
+2026-03-02 22:01:32.264 INFO  [main] [,] c.w.fitness.config.TransactionConfig - ReadOnly TransactionTemplate configured with timeout: 30s
+2026-03-02 22:01:33.049 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:01:33.054 WARN  [main] [,] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-03-02 22:01:33.125 ERROR [main] [,] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-03-02 22:07:28.319 INFO  [main] [,] com.wzl.fitness.FitnessApplication - Starting FitnessApplication using Java 21.0.9 with PID 22920 (D:\AFitness\Fitness\target\classes started by 22230 in d:\AFitness\Fitness)
+2026-03-02 22:07:28.319 DEBUG [main] [,] com.wzl.fitness.FitnessApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-03-02 22:07:28.319 INFO  [main] [,] com.wzl.fitness.FitnessApplication - The following 1 profile is active: "mysql"
+2026-03-02 22:07:30.953 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:07:30.956 INFO  [main] [,] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-02 22:07:30.956 INFO  [main] [,] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-03-02 22:07:31.046 INFO  [main] [,] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-03-02 22:07:32.159 WARN  [main] [,] org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-02 22:07:35.114 DEBUG [main] [,] c.w.f.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-02 22:07:35.119 DEBUG [main] [,] c.w.f.filter.RequestTracingFilter - Filter 'requestTracingFilter' configured for use
+2026-03-02 22:07:35.121 DEBUG [main] [,] com.wzl.fitness.filter.XssFilter - Filter 'xssFilter' configured for use
+2026-03-02 22:07:35.477 INFO  [main] [,] c.w.fitness.service.AsyncTaskService - AsyncTaskService监控指标初始化完成
+2026-03-02 22:07:36.441 INFO  [main] [,] c.w.f.m.a.config.AdminModuleConfig - 管理模块已启用并加载完成
+2026-03-02 22:07:36.576 INFO  [main] [,] c.w.f.m.n.c.NutritionModuleConfig - 营养模块已启用并加载完成
+2026-03-02 22:07:36.697 INFO  [main] [,] c.w.f.m.r.c.RecoveryModuleConfig - 恢复评估模块已启用并加载完成
+2026-03-02 22:07:36.707 INFO  [main] [,] c.w.f.m.t.c.TrainingModuleConfig - 训练模块已启用并加载完成
+2026-03-02 22:07:36.752 INFO  [main] [,] c.w.f.m.user.config.UserModuleConfig - 用户模块已启用并加载完成
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 初始化模块注册中心...
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [nutrition] 状态: ENABLED
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [admin] 状态: ENABLED
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [training] 状态: ENABLED
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [recovery] 状态: ENABLED
+2026-03-02 22:07:36.828 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [user] 状态: ENABLED
+2026-03-02 22:07:36.833 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块注册中心初始化完成，共 5 个模块
+2026-03-02 22:07:37.854 INFO  [main] [,] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7e80a98c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4cb518d, org.springframework.security.web.context.SecurityContextHolderFilter@5157d57c, org.springframework.security.web.header.HeaderWriterFilter@5613e43a, org.springframework.web.filter.CorsFilter@2960a7fe, org.springframework.security.web.authentication.logout.LogoutFilter@777be68c, com.wzl.fitness.security.JwtAuthenticationFilter@70d49a95, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1605ab7b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6657c199, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@487edcba, org.springframework.security.web.session.SessionManagementFilter@62f8874c, org.springframework.security.web.access.ExceptionTranslationFilter@4b18821d, org.springframework.security.web.access.intercept.AuthorizationFilter@6d648b8b]
+2026-03-02 22:07:37.929 INFO  [main] [,] c.w.fitness.config.TransactionConfig - TransactionTemplate configured with timeout: 30s
+2026-03-02 22:07:37.939 INFO  [main] [,] c.w.fitness.config.TransactionConfig - ReadOnly TransactionTemplate configured with timeout: 30s
+2026-03-02 22:07:38.742 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:07:38.783 INFO  [main] [,] com.wzl.fitness.FitnessApplication - Started FitnessApplication in 11.223 seconds (process running for 11.748)
+2026-03-02 22:07:38.899 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.age,
+        u1_0.avatar,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.experience_level,
+        u1_0.gender,
+        u1_0.height,
+        u1_0.last_login_at,
+        u1_0.password,
+        u1_0.points,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username,
+        u1_0.weight 
+    from
+        user_table u1_0 
+    where
+        u1_0.username=?
+2026-03-02 22:07:39.296 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.age,
+        u1_0.avatar,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.experience_level,
+        u1_0.gender,
+        u1_0.height,
+        u1_0.last_login_at,
+        u1_0.password,
+        u1_0.points,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username,
+        u1_0.weight,
+        rm1_0.user_id,
+        rm1_0.id,
+        rm1_0.muscle_soreness,
+        rm1_0.record_date,
+        rm1_0.resting_heart_rate,
+        rm1_0.sleep_quality,
+        rm1_0.subjective_energy 
+    from
+        user_table u1_0 
+    left join
+        recovery_metrics rm1_0 
+            on u1_0.id=rm1_0.user_id 
+    where
+        u1_0.id=?
+2026-03-02 22:07:39.309 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        tr1_0.user_id,
+        tr1_0.id,
+        tr1_0.created_at,
+        tr1_0.deleted,
+        tr1_0.deleted_at,
+        tr1_0.deleted_by,
+        tr1_0.duration,
+        tr1_0.exercise_name,
+        tr1_0.notes,
+        tr1_0.reps,
+        tr1_0.sets,
+        tr1_0.total_volume,
+        tr1_0.training_date,
+        tr1_0.training_stress,
+        tr1_0.updated_at,
+        tr1_0.weight 
+    from
+        training_records tr1_0 
+    where
+        tr1_0.user_id=? 
+        and (
+            tr1_0.deleted = 0
+        ) 
+2026-03-02 22:07:39.324 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        ta1_0.user_id,
+        ta1_0.id,
+        ta1_0.advice_date,
+        ta1_0.advice_type,
+        ta1_0.confidence_score,
+        ta1_0.content 
+    from
+        training_advices ta1_0 
+    where
+        ta1_0.user_id=?
+2026-03-02 22:07:39.374 DEBUG [main] [,] org.hibernate.SQL - 
+    update
+        user_table 
+    set
+        age=?,
+        avatar=?,
+        created_at=?,
+        email=?,
+        experience_level=?,
+        gender=?,
+        height=?,
+        last_login_at=?,
+        password=?,
+        points=?,
+        role=?,
+        updated_at=?,
+        username=?,
+        weight=? 
+    where
+        id=?
+2026-03-02 22:07:39.389 INFO  [main] [,] c.w.fitness.service.AdminInitializer - 管理员账户已存在，密码已重置: admin
+2026-03-02 22:28:52.312 INFO  [main] [,] com.wzl.fitness.FitnessApplication - Starting FitnessApplication using Java 21.0.9 with PID 21920 (D:\AFitness\Fitness\target\classes started by 22230 in D:\AFitness\Fitness)
+2026-03-02 22:28:52.312 DEBUG [main] [,] com.wzl.fitness.FitnessApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-03-02 22:28:52.327 INFO  [main] [,] com.wzl.fitness.FitnessApplication - The following 1 profile is active: "mysql"
+2026-03-02 22:28:54.975 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:28:54.975 INFO  [main] [,] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-02 22:28:54.975 INFO  [main] [,] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-03-02 22:28:55.070 INFO  [main] [,] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-03-02 22:28:56.197 WARN  [main] [,] org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-02 22:28:58.964 DEBUG [main] [,] c.w.f.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-03-02 22:28:58.964 DEBUG [main] [,] c.w.f.filter.RequestTracingFilter - Filter 'requestTracingFilter' configured for use
+2026-03-02 22:28:58.964 DEBUG [main] [,] com.wzl.fitness.filter.XssFilter - Filter 'xssFilter' configured for use
+2026-03-02 22:28:59.326 INFO  [main] [,] c.w.fitness.service.AsyncTaskService - AsyncTaskService监控指标初始化完成
+2026-03-02 22:29:00.288 INFO  [main] [,] c.w.f.m.a.config.AdminModuleConfig - 管理模块已启用并加载完成
+2026-03-02 22:29:00.428 INFO  [main] [,] c.w.f.m.n.c.NutritionModuleConfig - 营养模块已启用并加载完成
+2026-03-02 22:29:00.552 INFO  [main] [,] c.w.f.m.r.c.RecoveryModuleConfig - 恢复评估模块已启用并加载完成
+2026-03-02 22:29:00.567 INFO  [main] [,] c.w.f.m.t.c.TrainingModuleConfig - 训练模块已启用并加载完成
+2026-03-02 22:29:00.599 INFO  [main] [,] c.w.f.m.user.config.UserModuleConfig - 用户模块已启用并加载完成
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 初始化模块注册中心...
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [nutrition] 状态: ENABLED
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [admin] 状态: ENABLED
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [training] 状态: ENABLED
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [recovery] 状态: ENABLED
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块 [user] 状态: ENABLED
+2026-03-02 22:29:00.688 INFO  [main] [,] c.w.f.shared.config.ModuleRegistry - 模块注册中心初始化完成，共 5 个模块
+2026-03-02 22:29:01.788 INFO  [main] [,] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1f4c683c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e65c123, org.springframework.security.web.context.SecurityContextHolderFilter@3b5c0302, org.springframework.security.web.header.HeaderWriterFilter@36721f13, org.springframework.web.filter.CorsFilter@7f0e9c4c, org.springframework.security.web.authentication.logout.LogoutFilter@6ea70999, com.wzl.fitness.security.JwtAuthenticationFilter@16546957, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@173e3893, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ea4252, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@34963943, org.springframework.security.web.session.SessionManagementFilter@6092de45, org.springframework.security.web.access.ExceptionTranslationFilter@53f81eeb, org.springframework.security.web.access.intercept.AuthorizationFilter@24a42e9d]
+2026-03-02 22:29:01.864 INFO  [main] [,] c.w.fitness.config.TransactionConfig - TransactionTemplate configured with timeout: 30s
+2026-03-02 22:29:01.880 INFO  [main] [,] c.w.fitness.config.TransactionConfig - ReadOnly TransactionTemplate configured with timeout: 30s
+2026-03-02 22:29:02.639 INFO  [main] [,] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-02 22:29:02.689 INFO  [main] [,] com.wzl.fitness.FitnessApplication - Started FitnessApplication in 11.082 seconds (process running for 11.574)
+2026-03-02 22:29:02.796 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.age,
+        u1_0.avatar,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.experience_level,
+        u1_0.gender,
+        u1_0.height,
+        u1_0.last_login_at,
+        u1_0.password,
+        u1_0.points,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username,
+        u1_0.weight 
+    from
+        user_table u1_0 
+    where
+        u1_0.username=?
+2026-03-02 22:29:03.205 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.age,
+        u1_0.avatar,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.experience_level,
+        u1_0.gender,
+        u1_0.height,
+        u1_0.last_login_at,
+        u1_0.password,
+        u1_0.points,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username,
+        u1_0.weight,
+        rm1_0.user_id,
+        rm1_0.id,
+        rm1_0.muscle_soreness,
+        rm1_0.record_date,
+        rm1_0.resting_heart_rate,
+        rm1_0.sleep_quality,
+        rm1_0.subjective_energy 
+    from
+        user_table u1_0 
+    left join
+        recovery_metrics rm1_0 
+            on u1_0.id=rm1_0.user_id 
+    where
+        u1_0.id=?
+2026-03-02 22:29:03.220 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        tr1_0.user_id,
+        tr1_0.id,
+        tr1_0.created_at,
+        tr1_0.deleted,
+        tr1_0.deleted_at,
+        tr1_0.deleted_by,
+        tr1_0.duration,
+        tr1_0.exercise_name,
+        tr1_0.notes,
+        tr1_0.reps,
+        tr1_0.sets,
+        tr1_0.total_volume,
+        tr1_0.training_date,
+        tr1_0.training_stress,
+        tr1_0.updated_at,
+        tr1_0.weight 
+    from
+        training_records tr1_0 
+    where
+        tr1_0.user_id=? 
+        and (
+            tr1_0.deleted = 0
+        ) 
+2026-03-02 22:29:03.238 DEBUG [main] [,] org.hibernate.SQL - 
+    select
+        ta1_0.user_id,
+        ta1_0.id,
+        ta1_0.advice_date,
+        ta1_0.advice_type,
+        ta1_0.confidence_score,
+        ta1_0.content 
+    from
+        training_advices ta1_0 
+    where
+        ta1_0.user_id=?
+2026-03-02 22:29:03.296 DEBUG [main] [,] org.hibernate.SQL - 
+    update
+        user_table 
+    set
+        age=?,
+        avatar=?,
+        created_at=?,
+        email=?,
+        experience_level=?,
+        gender=?,
+        height=?,
+        last_login_at=?,
+        password=?,
+        points=?,
+        role=?,
+        updated_at=?,
+        username=?,
+        weight=? 
+    where
+        id=?
+2026-03-02 22:29:03.300 INFO  [main] [,] c.w.fitness.service.AdminInitializer - 管理员账户已存在: admin，默认密码已重置为: Test123!
