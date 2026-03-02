@@ -8,7 +8,8 @@ import { VantResolver } from 'unplugin-vue-components/resolvers'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const repoName = process.env.GITHUB_REPOSITORY?.split('/')?.[1]
-const base = process.env.GITHUB_PAGES === 'true' && repoName ? `/${repoName}/` : '/'
+const isGitHubPages = process.env.GITHUB_PAGES === 'true'
+const base = isGitHubPages && repoName ? `/${repoName}/` : '/'
 
 // Plugin to fix Element Plus and Vant module resolution issues
 function globalThisResolverPlugin() {
@@ -132,8 +133,10 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
       '@shared': resolve(__dirname, '../shared'),
-      // 保证 shared 内引用的 @sentry/vue 从 frontend node_modules 解析，避免构建失败
-      '@sentry/vue': resolve(__dirname, 'node_modules/@sentry/vue'),
+      // 在 GitHub Pages 构建中使用 Sentry 空实现，避免浏览器环境下 global/Request 相关错误
+      '@sentry/vue': isGitHubPages
+        ? resolve(__dirname, 'src/mocks/sentry-vue.js')
+        : resolve(__dirname, 'node_modules/@sentry/vue'),
     },
     dedupe: ['vue', 'vue-router', 'pinia', 'axios', 'element-plus'],
   },
